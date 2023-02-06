@@ -26,13 +26,13 @@ function notif:Notification(title,desc,font,font2,visibletime)
 		instances.Frame_1.Name = 'Main'
 
 
-		instances.Frame_1.BackgroundColor3 = Color3.new(0.47451, 0.541176, 0.294118)
+		instances.Frame_1.BackgroundColor3 = Color3.new(0.0431373, 0.0431373, 0.0431373)
 		instances.Frame_1.BorderSizePixel = 0
 		instances.Frame_1.Position = UDim2.new(1, 0,0.509, 0)
 		instances.Frame_1.Size = UDim2.new(0, 331, 0, 61)
 
 		instances.Frame_2.Parent = instances.Frame_1
-		instances.Frame_2.BackgroundColor3 = Color3.new(0.0431373, 0.0431373, 0.0431373)
+		instances.Frame_2.BackgroundColor3 = Color3.new(0.835294, 0.768627, 0.396078)
 		instances.Frame_2.Size = UDim2.new(0, 11, 0, 61)
 		instances.Frame_2.Name = 'Bar'
 
