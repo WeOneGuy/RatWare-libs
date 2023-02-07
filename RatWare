@@ -4,7 +4,7 @@ local char = plr.Character or plr.CharacterAdded:Wait()
 local hum = char:FindFirstChildOfClass("Humanoid") or char:WaitForChild("Humanoid")
 local notif = loadstring(game:HttpGet("https://raw.githubusercontent.com/WeOneGuy/RatWare-libs/main/NotificationSystem"))()
 local TweenService = game:GetService("TweenService")
-
+local Nord = loadstring(game:HttpGetAsync("https://scripts.nord.vip/NordNotifs.lua", true))();
 if not fireproximityprompt then
 	local msg = Instance.new("Message",workspace)
 	msg.Text = "you have fireproximityprompt function bro get better executor"
@@ -157,7 +157,7 @@ function CreateNotify(Target, EntityName, ImageId)
 	Distance.Font = Enum.Font.Unknown
 	Distance.Text = "0"
 	Distance.TextColor3 = Color3.fromRGB(255, 250, 185)
-	Distance.TextSize = 24.000
+	Distance.TextSize = 20
 
 	Notification.Name = "Notification"
 	Notification.Parent = EntityNotify
@@ -225,24 +225,25 @@ function CreateNotify(Target, EntityName, ImageId)
 
 	UIAspectRatioConstraint_5.Parent = Notification
 	UIAspectRatioConstraint_5.AspectRatio = 5.340
-	
+
 	local player = char:FindFirstChild("HumanoidRootPart")
 	local Sound = Instance.new("Sound")
 	Sound.Parent = EntityNotify
+	Sound.SoundId = "rbxassetid://9125485659"
 	Sound:Play()
 	local tween = TweenService:Create(Notification, TweenInfo.new(2,Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Position = UDim2.new(0.5, 0,0.03, 0) })
 	local tween2 = TweenService:Create(Notification, TweenInfo.new(1,Enum.EasingStyle.Back, Enum.EasingDirection.In), { Position = UDim2.new(0.5, 0,-0.2, 0) })
-	local smalltween = TweenService:Create(Small, TweenInfo.new(1,Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Position = UDim2.new(0.5, 0,0.094, 0) })
+	local smalltween = TweenService:Create(Small, TweenInfo.new(1,Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Position = UDim2.new(0.5, 0,0.1, 0) })
 	local smalltween2 = TweenService:Create(Small, TweenInfo.new(1,Enum.EasingStyle.Back, Enum.EasingDirection.In), { Position = UDim2.new(0.5, 0,-0.261, 0) })
 	tween:Play()
 	wait(0.5)
 	smalltween:Play()
-	
+
 	Target.Destroying:Connect(function()
 		Deleted = true
 	end)
-	
-	
+
+
 	repeat
 		local Text = string.format('%.2fm', (player.Position - Target.Position).magnitude)
 		Small.Distance.Text = Text
@@ -293,11 +294,12 @@ local flags = {
 
 local esptable = {doors={},keys={},items={},books={},entity={},chests={},lockers={},people={},gold={}}
 
-local win = library:Window("RatWare", "Doors exploit", Color3.fromRGB(77, 84, 43), Enum.KeyCode.LeftControl)
+local win = library:Window("RatWare", "Doors exploit", Color3.fromRGB(77, 84, 43), Enum.KeyCode.LeftAlt)
 
 local window_player = win:Tab("player","http://www.roblox.com/asset/?id=6022668888")
 local window_esp = win:Tab("esp", "http://www.roblox.com/asset/?id=6022668888")
 local window_misc = win:Tab("misc", "http://www.roblox.com/asset/?id=6022668888")
+local window_entity = win:Tab("Entity features", "http://www.roblox.com/asset/?id=6022668888")
 local entitynames = {"RushMoving","AmbushMoving","Snare","A60","A120","Screech"}
 local screechremote = entityinfo:FindFirstChild("Screech")
 
@@ -830,67 +832,6 @@ window_esp:Slider("Minimum gold value","",5,150,25,function(val)
 	flags.goldespvalue = val
 end)
 
-window_misc:Toggle("Notify entities","I hope you will see it!",false,function(val)
-	flags.hintrush = val
-	
-	if val then
-		local addconnect
-		addconnect = workspace.ChildAdded:Connect(function(v)
-			if table.find(entitynames,v.Name) then
-				repeat task.wait() until plr:DistanceFromCharacter(v:GetPivot().Position) < 1000 or not v:IsDescendantOf(workspace)
-				if v:IsDescendantOf(workspace) then
-					local Image = ""
-					if v.Name == "RushMoving" then
-						Image = "http://www.roblox.com/asset/?id=10716387808"
-					elseif v.Name == "AmbushMoving" then
-						Image = "http://www.roblox.com/asset/?id=10722835155"
-					elseif v.Name == "A60" then
-						Image = "http://www.roblox.com/asset/?id=11287256498"
-					elseif v.Name == "A120" then
-						Image = "http://www.roblox.com/asset/?id=12351008553"
-					elseif v.Name == "Snare" then
-						Image = "http://www.roblox.com/asset/?id=9099996382"
-					end
-					CreateNotify(v.PrimaryPart,v.Name:gsub("Moving",""):lower(), Image)
-				end
-			end
-		end) 
-		addconnect = workspace.Camera.ChildAdded:Connect(function(v)
-			if table.find(entitynames,v.Name) then
-				repeat task.wait() until plr:DistanceFromCharacter(v:GetPivot().Position) < 1000 or not v:IsDescendantOf(workspace)
-				if v:IsDescendantOf(workspace) then
-					local Image = ""
-					if v.Name == "Screech" then
-						Image = "http://www.roblox.com/asset/?id=11000062353"
-					end
-					CreateNotify(v.PrimaryPart,v.Name, Image)
-				end
-			end
-		end) 
-
-		repeat task.wait() until not flags.hintrush
-		addconnect:Disconnect()
-	end
-end)
-
-window_misc:Toggle("Disable seek chase","",false,function(val)
-	flags.noseek = val
-
-	if val then
-		local addconnect
-		addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-			local trigger = room:WaitForChild("TriggerEventCollision",2)
-
-			if trigger then
-				trigger:Destroy() 
-			end
-		end)
-
-		repeat task.wait() until not flags.noseek
-		addconnect:Disconnect()
-	end
-end)
-
 window_misc:Toggle("Delete gates","",false,function(val)
 	flags.nogates = val
 
@@ -935,18 +876,6 @@ window_misc:Toggle("Delete puzzle door","(Room with paintings)",false,function(v
 		addconnect:Disconnect()
 	end
 end)
-
-if screechremote then
-	window_misc:Toggle("Harmless screech","He's noob!",false,function(val)
-		flags.noscreech = val
-
-		if val then
-			screechremote.Parent = nil
-			repeat task.wait() until not flags.noscreech
-			screechremote.Parent = entityinfo
-		end
-	end)
-end
 
 window_misc:Toggle("No skeleton doors","Yup",false,function(val)
 	flags.noskeledoors = val
@@ -1000,7 +929,7 @@ window_misc:Toggle("auto library code","Just pick up paper (Must collect all boo
 				if code:find("_") then
 					notif:Notification("Error","Get all hints first","GothamSemibold","Gotham",3)
 				else
-					notif:Notification("Code","The code is ".. code,"GothamSemibold","Gotham",5)
+					notif:Notification("Code","The code is ".. code,"GothamSemibold","Gotham",20)
 				end
 			end
 		end)
@@ -1145,12 +1074,85 @@ window_misc:Button("bypass anticheat","bypass anticheat makes it so you CANT pic
 	hum = newhum
 end)
 
+window_entity:Toggle("Notify entities","I hope you will see it!",false,function(val)
+	flags.hintrush = val
+
+	if val then
+		local addconnect
+		addconnect = workspace.ChildAdded:Connect(function(v)
+			if table.find(entitynames,v.Name) then
+				repeat task.wait() until plr:DistanceFromCharacter(v:GetPivot().Position) < 1000 or not v:IsDescendantOf(workspace)
+				if v:IsDescendantOf(workspace) then
+					local Image = ""
+					if v.Name == "RushMoving" then
+						Image = "http://www.roblox.com/asset/?id=10716387808"
+					elseif v.Name == "AmbushMoving" then
+						Image = "http://www.roblox.com/asset/?id=10722835155"
+					elseif v.Name == "A60" then
+						Image = "http://www.roblox.com/asset/?id=11287256498"
+					elseif v.Name == "A120" then
+						Image = "http://www.roblox.com/asset/?id=12351008553"
+					elseif v.Name == "Snare" then
+						Image = "http://www.roblox.com/asset/?id=9099996382"
+					end
+					CreateNotify(v.PrimaryPart,v.Name:gsub("Moving",""):lower(), Image)
+				end
+			end
+		end) 
+		addconnect = workspace.Camera.ChildAdded:Connect(function(v)
+			if table.find(entitynames,v.Name) then
+				repeat task.wait() until plr:DistanceFromCharacter(v:GetPivot().Position) < 1000 or not v:IsDescendantOf(workspace)
+				if v:IsDescendantOf(workspace) then
+					local Image = ""
+					if v.Name == "Screech" then
+						Image = "http://www.roblox.com/asset/?id=11000062353"
+					end
+					CreateNotify(v.PrimaryPart,v.Name, Image)
+				end
+			end
+		end) 
+
+		repeat task.wait() until not flags.hintrush
+		addconnect:Disconnect()
+	end
+end)
+window_entity:Line()
+window_entity:Label("Entity disablers")
+window_entity:Toggle("Disable seek chase","",false,function(val)
+	flags.noseek = val
+
+	if val then
+		local addconnect
+		addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+			local trigger = room:WaitForChild("TriggerEventCollision",2)
+
+			if trigger then
+				trigger:Destroy() 
+			end
+		end)
+
+		repeat task.wait() until not flags.noseek
+		addconnect:Disconnect()
+	end
+end)
+
+if screechremote then
+	window_entity:Toggle("Harmless screech","He's noob!",false,function(val)
+		flags.noscreech = val
+
+		if val then
+			screechremote.Parent = nil
+			repeat task.wait() until not flags.noscreech
+			screechremote.Parent = entityinfo
+		end
+	end)
+end
+
 if game.ReplicatedStorage:WaitForChild("GameData"):WaitForChild("Floor").Value == "Rooms" then
-	local window_rooms = library.window("the rooms")
 
 	local a90remote = game.ReplicatedStorage:WaitForChild("EntityInfo"):WaitForChild("A90")
 
-	window_rooms:Toggle("Harmless A90","It won't spawn",false,function(val)
+	window_entity:Toggle("Harmless A90","It won't spawn",false,function(val)
 		flags.noa90 = val
 
 		if val  then
@@ -1168,57 +1170,29 @@ if game.ReplicatedStorage:WaitForChild("GameData"):WaitForChild("Floor").Value =
 			end
 		end
 	end)
-
-	window_rooms:Toggle("Auto a-1000","Not working :troll:",false,function(val)
-		flags.autorooms = val
-
-		if val then
-			local hide = false
-
-			local function getrecentroom(index)
-				local rooms = workspace.CurrentRooms:GetChildren() 
-				table.sort(rooms,function(a,b)
-					return tonumber(a.Name) > tonumber(b.Name) 
-				end)
-
-				return rooms[index]
-			end
-
-			local entconnect
-			entconnect = workspace.ChildAdded:Connect(function(v)
-				if v:IsA("Model") then
-					if v.Name == "A60" or v.Name == "A120" then
-						hide = true
-
-						repeat task.wait() until not v:IsDescendantOf(workspace)
-						hide = false
-					end
-				end
-			end)
-
-			while flags.autorooms do
-				local room = getrecentroom(2)
-				local door = room:WaitForChild("Door")
-				local dpos = door:GetPivot()
-
-				if hide then
-					repeat task.wait()
-						char:PivotTo(dpos+Vector3.new(0,150,0))
-					until not hide
-				else
-					repeat task.wait()
-						char:PivotTo(dpos)
-					until lastroom ~= room or not flags.autorooms
-				end
-
-				task.wait()
-			end
-			entconnect:Disconnect()
-		end
-	end)
 end
-
-window_misc:Line()
-window_misc:Button("Close gui","Destroys GUI and setting default values",function()
-	library:Destroy()
+window_entity:Line()
+window_entity:Label("Use it only in 49 room")
+window_entity:Button("Delete figure","Real.", function(val)
+	local figure = workspace.CurrentRooms:FindFirstChild("FigureRagdoll", true)
+	if not figure then
+		return Nord:Notify(nil, "You must do it only in 49 room", "Error", 3)
+	elseif workspace.CurrentRooms:FindFirstChild("51") then
+		return Nord:Notify(nil, "You must do it only in 49 room", "Error", 3)	
+	end
+	if sethiddenproperty then
+		sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 10000)
+		sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 10000)
+	end
+	for _, part in pairs(figure:GetDescendants()) do
+		if part:IsA("BasePart") then
+			part:SetAttribute("CollisionValueSave", part.CanCollide)
+			part.CanCollide = false
+		end
+	end
 end)
+
+--window_misc:Line()
+--window_misc:Button("Close gui","Destroys GUI and setting default values",function()
+--	library:Destroy()
+--end)
