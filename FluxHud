@@ -1,4 +1,4 @@
-local Flux = {RainbowColorValue = 0, HueSelectionPosition = 0}
+ local Flux = {RainbowColorValue = 0, HueSelectionPosition = 0}
 local PresetColor = Color3.fromRGB(66, 134, 255)
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -507,8 +507,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			PresetColor = Newcolor
 			local rainbowfunc = coroutine.create(function()
 				while rainbow == true do
-					Tab.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
-					wait()
+					for i, v in pairs(TabHold:GetChildren()) do
+						if v.Name == "Tab" then
+							v.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)]
+						end
+					end
 				end
 			end)
 			if rainbow == true then
@@ -890,6 +893,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Toggle.MouseButton1Click:Connect(function()
 				if Toggled == false then
+					print(PresetColor)
 					ToggleCircle:TweenPosition(UDim2.new(0.37, 0,-0.273, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
 					TweenService:Create(
 						ToggleCircle,
@@ -897,6 +901,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						{BackgroundColor3 =PresetColor}
 					):Play()
 				else
+					print(PresetColor)
 					ToggleCircle:TweenPosition(UDim2.new(0, 0,-0.273, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
 					TweenService:Create(
 						ToggleCircle,
