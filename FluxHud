@@ -6,7 +6,6 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
-local dragable = true
 local FluxLib = Instance.new("ScreenGui")
 FluxLib.Name = "FluxLib"
 FluxLib.Parent = game.CoreGui
@@ -29,48 +28,58 @@ coroutine.wrap(
 	end
 )()
 
-local function dragify(Frame, value)
+local function Drag(topbarobject, object)
+	local Dragging = nil
+	local DragInput = nil
+	local DragStart = nil
+	local StartPosition = nil
 	local dragToggle = nil
 	local dragSpeed = 0.25
 	local dragInput = nil
 	local dragStart = nil
 	local dragPos = nil
-	function updateInput(input)
+	local function Update(input)
 		local Delta = input.Position - dragStart
 		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
 		game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.25), {Position = Position}):Play()
 	end
-	Frame.InputBegan:Connect(function(input)
-		if dragable == true then
-			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UserInputService:GetFocusedTextBox() == nil then
-				dragToggle = true
-				dragStart = input.Position
-				startPos = Frame.Position
-				input.Changed:Connect(function()
-					if input.UserInputState == Enum.UserInputState.End then
-						dragToggle = false
+	topbarobject.InputBegan:Connect(
+		function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = true
+				DragStart = input.Position
+				StartPosition = object.Position
+
+				input.Changed:Connect(
+					function()
+						if input.UserInputState == Enum.UserInputState.End then
+							Dragging = false
+						end
 					end
-				end)
+				)
 			end
 		end
-	end)
-	Frame.InputChanged:Connect(function(input)
-		if dragable == true then
-			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-				dragInput = input
+	)
+
+	topbarobject.InputChanged:Connect(
+		function(input)
+			if
+				input.UserInputType == Enum.UserInputType.MouseMovement or
+				input.UserInputType == Enum.UserInputType.Touch
+			then
+				DragInput = input
 			end
 		end
-	end)
-	game:GetService("UserInputService").InputChanged:Connect(function(input)
-		if dragable == true then
-			if input == dragInput and dragToggle then
-				updateInput(input)
+	)
+
+	UserInputService.InputChanged:Connect(
+		function(input)
+			if input == DragInput and Dragging then
+				Update(input)
 			end
 		end
-	end)
+	)
 end
-
-
 
 function Flux:Window(text, bottom,mainclr,toclose)
 	CloseBind = toclose or Enum.KeyCode.RightControl
@@ -169,8 +178,8 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	ContainerFolder.Name = "ContainerFolder"
 	ContainerFolder.Parent = MainFrame
 
-	dragify(MainFrame)
-	dragify(MainFrame)
+	Drag(MainFrame)
+	Drag(MainFrame)
 	MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 
 	local uitoggled = false
@@ -2123,11 +2132,9 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						if RainbowColorPicker then
 							return
 						end
-						
 						if ColorInput then
 							ColorInput:Disconnect()
 						end
-						dragable = false
 						ColorInput =
 							RunService.RenderStepped:Connect(
 								function()
@@ -2151,7 +2158,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Color.InputEnded:Connect(
 				function(input)
-					dragable = true
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if ColorInput then
 							ColorInput:Disconnect()
@@ -2170,7 +2176,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						if HueInput then
 							HueInput:Disconnect()
 						end
-						dragable = false
 						HueInput =
 							RunService.RenderStepped:Connect(
 								function()
@@ -2190,7 +2195,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Hue.InputEnded:Connect(
 				function(input)
-					dragable = true
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if HueInput then
 							HueInput:Disconnect()
