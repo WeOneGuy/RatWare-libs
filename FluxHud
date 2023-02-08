@@ -510,16 +510,12 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					for i, v in pairs(TabHold:GetChildren()) do
 						if v.Name == "Tab" then
 							v.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
+							wait()
 						end
 					end
 				end
 			end)
 			if rainbow == true then
-				for i, v in pairs(TabHold:GetChildren()) do
-					if v.Name == "Tab" then
-						v.BackgroundColor3 = PresetColor
-					end
-				end
 				pcall(function()
 					coroutine.resume(rainbowfunc)
 				end)
