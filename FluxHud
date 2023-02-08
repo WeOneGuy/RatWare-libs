@@ -490,13 +490,19 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		
 		local function ChangeMenuColor(Newcolor, rainbow)
 			PresetColor = Newcolor
+			local rainbowfunc = coroutine.create(function()
+				Tab.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
+				wait()
+			end)
 			if rainbow == true then
-				while rainbow do
-					
-					Tab.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
-					wait()
-				end
+				Tab.BackgroundColor3 = PresetColor
+				pcall(function()
+					coroutine.resume(rainbowfunc)
+				end)
 			else
+				pcall(function()
+					coroutine.close(rainbowfunc)
+				end)
 				Tab.BackgroundColor3 = PresetColor
 			end
 		end
