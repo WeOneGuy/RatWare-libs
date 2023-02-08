@@ -35,7 +35,6 @@ local function Dragging(topbarobject, object)
 	local dragSpeed = 0.25
 	local function Update(input)
 		local Delta = input.Position - DragStart
-		print(startPos)
 		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
 		game:GetService("TweenService"):Create(object, TweenInfo.new(dragSpeed), {Position = Position}):Play()
 	end
@@ -336,10 +335,13 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			wait(.4)
 			CloseBtn.Visible = false
-			NotificationFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-
+			NotificationFrame:TweenSize(UDim2.new(0, 400, 0, 10), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+			wait(.6)
+			NotificationFrame:TweenSize(UDim2.new(0, 0, 0, 10), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+			wait(.6)
+			NotificationFrame.Visible = false
 			wait(.2)
-
+		
 			TweenService:Create(
 				NotificationBase,
 				TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
