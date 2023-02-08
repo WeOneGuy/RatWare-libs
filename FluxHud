@@ -509,7 +509,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				while rainbow == true do
 					for i, v in pairs(TabHold:GetChildren()) do
 						if v.Name == "Tab" then
-							v.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)]
+							v.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
 						end
 					end
 				end
