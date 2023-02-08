@@ -163,8 +163,8 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	ContainerFolder.Name = "ContainerFolder"
 	ContainerFolder.Parent = MainFrame
 
-	MakeDraggable(Drag,MainFrame)
-	MakeDraggable(LeftFrame,MainFrame)
+	dragify(MainFrame)
+	dragify(MainFrame)
 	MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 
 	local uitoggled = false
