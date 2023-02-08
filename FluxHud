@@ -2127,7 +2127,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						if ColorInput then
 							ColorInput:Disconnect()
 						end
-						dragable = true
+						dragable = false
 						ColorInput =
 							RunService.RenderStepped:Connect(
 								function()
@@ -2151,7 +2151,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Color.InputEnded:Connect(
 				function(input)
-					dragable = false
+					dragable = true
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if ColorInput then
 							ColorInput:Disconnect()
@@ -2170,7 +2170,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						if HueInput then
 							HueInput:Disconnect()
 						end
-						dragable = true
+						dragable = false
 						HueInput =
 							RunService.RenderStepped:Connect(
 								function()
@@ -2190,7 +2190,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Hue.InputEnded:Connect(
 				function(input)
-					dragable = false
+					dragable = true
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if HueInput then
 							HueInput:Disconnect()
