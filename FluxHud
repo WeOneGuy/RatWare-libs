@@ -33,7 +33,6 @@ local function Dragging(topbarobject, object)
 	local DragInput = nil
 	local DragStart = nil
 	local dragSpeed = 0.25
-	local startPos = nil
 	local function Update(input)
 		local Delta = input.Position - DragStart
 		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
