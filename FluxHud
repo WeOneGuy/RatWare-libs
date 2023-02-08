@@ -7,7 +7,7 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
 local FluxLib = Instance.new("ScreenGui")
-local rainbowed = false
+PresetColor = nil
 FluxLib.Name = "RatWare"
 FluxLib.Parent = game.CoreGui
 FluxLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -512,13 +512,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				end
 			end)
 			if rainbow == true then
-				rainbowed = true
 				Tab.BackgroundColor3 = PresetColor
 				pcall(function()
 					coroutine.resume(rainbowfunc)
 				end)
 			else
-				rainbowed = false
 				pcall(function()
 					coroutine.close(rainbowfunc)
 				end)
