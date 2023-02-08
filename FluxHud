@@ -28,7 +28,7 @@ coroutine.wrap(
 	end
 )()
 
-local function Drag(topbarobject, object)
+local function Dragging(topbarobject, object)
 	local Dragging = nil
 	local DragInput = nil
 	local DragStart = nil
@@ -178,8 +178,8 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	ContainerFolder.Name = "ContainerFolder"
 	ContainerFolder.Parent = MainFrame
 
-	Drag(MainFrame)
-	Drag(MainFrame)
+	Dragging(Drag,MainFrame)
+	Dragging(LeftFrame,MainFrame)
 	MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 
 	local uitoggled = false
