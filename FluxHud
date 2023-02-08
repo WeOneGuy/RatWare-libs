@@ -515,7 +515,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				end
 			end)
 			if rainbow == true then
-				Tab.BackgroundColor3 = PresetColor
+				for i, v in pairs(TabHold:GetChildren()) do
+					if v.Name == "Tab" then
+						v.BackgroundColor3 = PresetColor
+					end
+				end
 				pcall(function()
 					coroutine.resume(rainbowfunc)
 				end)
@@ -523,7 +527,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				pcall(function()
 					coroutine.close(rainbowfunc)
 				end)
-				Tab.BackgroundColor3 = PresetColor
+				for i, v in pairs(TabHold:GetChildren()) do
+					if v.Name == "Tab" then
+						v.BackgroundColor3 = PresetColor
+					end
+				end
 			end
 		end
 		
