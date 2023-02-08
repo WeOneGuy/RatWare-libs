@@ -35,6 +35,7 @@ local function Dragging(topbarobject, object)
 	local dragSpeed = 0.25
 	local function Update(input)
 		local Delta = input.Position - DragStart
+		print(startPos)
 		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
 		game:GetService("TweenService"):Create(object, TweenInfo.new(dragSpeed), {Position = Position}):Play()
 	end
