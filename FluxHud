@@ -335,10 +335,10 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			wait(.4)
 			CloseBtn.Visible = false
-			NotificationFrame:TweenSize(UDim2.new(0, 400, 0, 10), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+			NotificationFrame:TweenSize(UDim2.new(0, 400, 0, 6), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 			wait(.6)
-			NotificationFrame:TweenSize(UDim2.new(0, 0, 0, 10), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-			wait(.6)
+			NotificationFrame:TweenSize(UDim2.new(0, 0, 0, 6), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+			wait(.5)
 			NotificationFrame.Visible = false
 			wait(.2)
 		
@@ -361,7 +361,9 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		):Play()
 
 		wait(.1)
-
+		NotificationFrame:TweenSize(UDim2.new(0, 0, 0, 6), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
+		NotificationFrame:TweenSize(UDim2.new(0, 400, 0, 6), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+		wait(.6)
 		NotificationFrame:TweenSize(UDim2.new(0, 400, 0, 214), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 
 		wait(.4)
