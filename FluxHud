@@ -6,7 +6,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
-
+local dragable = true
 local FluxLib = Instance.new("ScreenGui")
 FluxLib.Name = "FluxLib"
 FluxLib.Parent = game.CoreGui
@@ -29,7 +29,7 @@ coroutine.wrap(
 	end
 )()
 
-local function dragify(Frame)
+local function dragify(Frame, value)
 	local dragToggle = nil
 	local dragSpeed = 0.25
 	local dragInput = nil
@@ -41,25 +41,31 @@ local function dragify(Frame)
 		game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.25), {Position = Position}):Play()
 	end
 	Frame.InputBegan:Connect(function(input)
-		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UserInputService:GetFocusedTextBox() == nil then
-			dragToggle = true
-			dragStart = input.Position
-			startPos = Frame.Position
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragToggle = false
-				end
-			end)
+		if dragable == true then
+			if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UserInputService:GetFocusedTextBox() == nil then
+				dragToggle = true
+				dragStart = input.Position
+				startPos = Frame.Position
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						dragToggle = false
+					end
+				end)
+			end
 		end
 	end)
 	Frame.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			dragInput = input
+		if dragable == true then
+			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+				dragInput = input
+			end
 		end
 	end)
 	game:GetService("UserInputService").InputChanged:Connect(function(input)
-		if input == dragInput and dragToggle then
-			updateInput(input)
+		if dragable == true then
+			if input == dragInput and dragToggle then
+				updateInput(input)
+			end
 		end
 	end)
 end
@@ -2117,11 +2123,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						if RainbowColorPicker then
 							return
 						end
-
+						
 						if ColorInput then
 							ColorInput:Disconnect()
 						end
-
+						dragable = true
 						ColorInput =
 							RunService.RenderStepped:Connect(
 								function()
@@ -2145,6 +2151,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Color.InputEnded:Connect(
 				function(input)
+					dragable = false
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if ColorInput then
 							ColorInput:Disconnect()
@@ -2163,7 +2170,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						if HueInput then
 							HueInput:Disconnect()
 						end
-
+						dragable = true
 						HueInput =
 							RunService.RenderStepped:Connect(
 								function()
@@ -2183,6 +2190,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Hue.InputEnded:Connect(
 				function(input)
+					dragable = false
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if HueInput then
 							HueInput:Disconnect()
@@ -2202,7 +2210,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					if HueInput then
 						HueInput:Disconnect()
 					end
-
 					if RainbowColorPicker then
 						ToggleCircle:TweenPosition(UDim2.new(0.37, 0,-0.273, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
 						TweenService:Create(
