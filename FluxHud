@@ -7,7 +7,8 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
 local FluxLib = Instance.new("ScreenGui")
-FluxLib.Name = "FluxLib"
+local rainbowed = false
+FluxLib.Name = "RatWare"
 FluxLib.Parent = game.CoreGui
 FluxLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
@@ -367,7 +368,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		wait(.6)
 		NotificationFrame:TweenSize(UDim2.new(0, 400, 0, 214), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 
-		wait(.4)
+		wait(.6)
 		TweenService:Create(
 			NotificationDesc,
 			TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -511,11 +512,13 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				end
 			end)
 			if rainbow == true then
+				rainbowed = true
 				Tab.BackgroundColor3 = PresetColor
 				pcall(function()
 					coroutine.resume(rainbowfunc)
 				end)
 			else
+				rainbowed = false
 				pcall(function()
 					coroutine.close(rainbowfunc)
 				end)
