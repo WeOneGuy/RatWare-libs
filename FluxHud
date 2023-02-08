@@ -32,24 +32,17 @@ local function Dragging(topbarobject, object)
 	local Dragging = nil
 	local DragInput = nil
 	local DragStart = nil
-	local StartPosition = nil
-	local dragToggle = nil
 	local dragSpeed = 0.25
-	local dragInput = nil
-	local dragStart = nil
-	local dragPos = nil
 	local function Update(input)
-		local Delta = input.Position - dragStart
+		local Delta = input.Position - DragStart
 		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
-		game:GetService("TweenService"):Create(object, TweenInfo.new(0.25), {Position = Position}):Play()
+		game:GetService("TweenService"):Create(object, TweenInfo.new(dragSpeed), {Position = Position}):Play()
 	end
 	topbarobject.InputBegan:Connect(
 		function(input)
 			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 				Dragging = true
 				DragStart = input.Position
-				StartPosition = object.Position
-
 				input.Changed:Connect(
 					function()
 						if input.UserInputState == Enum.UserInputState.End then
@@ -72,8 +65,7 @@ local function Dragging(topbarobject, object)
 		end
 	)
 
-	UserInputService.InputChanged:Connect(
-		function(input)
+	UserInputService.InputChanged:Connect(function(input)
 			if input == DragInput and Dragging then
 				Update(input)
 			end
