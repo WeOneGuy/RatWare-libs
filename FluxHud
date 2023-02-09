@@ -509,7 +509,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			end
 		end)
 		
-		local function ChangeMenuColor(Newcolor, rainbow)
+		local function ChangeMenuColor(Newcolor)
 			PresetColor = Newcolor
 		end
 		
@@ -2231,6 +2231,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						OldHueSelectionPosition = HueSelection.Position
 
 						while RainbowColorPicker do
+							ChangeMenuColor(Color3.fromHSV(Flux.RainbowColorValue, 1, 1))
 							BoxColor.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
 							Color.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
 
@@ -2261,7 +2262,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Confirm.MouseButton1Click:Connect(
 				function()
-					ChangeMenuColor(Color3.fromHSV(ColorH, ColorS, ColorV), RainbowColorPicker)
+					ChangeMenuColor(Color3.fromHSV(ColorH, ColorS, ColorV))
 					ColorPickerToggled = not ColorPickerToggled
 					Colorpicker:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
