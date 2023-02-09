@@ -175,7 +175,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	Dragging(Drag,MainFrame)
 	Dragging(LeftFrame,MainFrame)
 	MainFrame:TweenSize(UDim2.new(0, 706, 0, 484), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
-
+	
+	function Flux:ChangePresetColor(Newcolor)
+		PresetColor = Newcolor
+	end
+	
 	local uitoggled = false
 	UserInputService.InputBegan:Connect(
 		function(io, p)
@@ -508,10 +512,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				end
 			end
 		end)
-		
-		local function ChangeMenuColor(Newcolor)
-			PresetColor = Newcolor
-		end
 		
 		local ContainerContent = {}
 		function ContainerContent:Button(text, desc, callback)
@@ -2231,7 +2231,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 						OldHueSelectionPosition = HueSelection.Position
 
 						while RainbowColorPicker do
-							ChangeMenuColor(Color3.fromHSV(Flux.RainbowColorValue, 1, 1))
 							BoxColor.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
 							Color.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
 
@@ -2262,7 +2261,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Confirm.MouseButton1Click:Connect(
 				function()
-					ChangeMenuColor(Color3.fromHSV(ColorH, ColorS, ColorV))
 					ColorPickerToggled = not ColorPickerToggled
 					Colorpicker:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
