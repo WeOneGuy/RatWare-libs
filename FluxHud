@@ -398,7 +398,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 		Tab.Name = "Tab"
 		Tab.Parent = TabHold
-		Tab.BackgroundColor3 = PresetColor
 		Tab.BorderSizePixel = 0
 		Tab.Size = UDim2.new(0, 205, 0, 40)
 		Tab.AutoButtonColor = false
@@ -407,6 +406,13 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		Tab.TextColor3 = Color3.fromRGB(0, 0, 0)
 		Tab.TextSize = 14.000
 		Tab.BackgroundTransparency = 1
+		coroutine.wrap(
+			function()
+				while wait() do
+					Tab.BackgroundColor3 = PresetColor
+				end
+			end
+		)()
 
 		TabIcon.Name = "TabIcon"
 		TabIcon.Parent = Tab
@@ -505,30 +511,6 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		
 		local function ChangeMenuColor(Newcolor, rainbow)
 			PresetColor = Newcolor
-			local rainbowfunc = coroutine.create(function()
-				while rainbow == true do
-					for i, v in pairs(TabHold:GetChildren()) do
-						if v.Name == "Tab" then
-							v.BackgroundColor3 = Color3.fromHSV(Flux.RainbowColorValue, 1, 1)
-							wait()
-						end
-					end
-				end
-			end)
-			if rainbow == true then
-				pcall(function()
-					coroutine.resume(rainbowfunc)
-				end)
-			else
-				pcall(function()
-					coroutine.close(rainbowfunc)
-				end)
-				for i, v in pairs(TabHold:GetChildren()) do
-					if v.Name == "Tab" then
-						v.BackgroundColor3 = PresetColor
-					end
-				end
-			end
 		end
 		
 		local ContainerContent = {}
@@ -1122,9 +1104,15 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			CurrentValueFrame.Name = "CurrentValueFrame"
 			CurrentValueFrame.Parent = SlideFrame
-			CurrentValueFrame.BackgroundColor3 = PresetColor
 			CurrentValueFrame.BorderSizePixel = 0
 			CurrentValueFrame.Size = UDim2.new((start or 0) / max, 0, 0, 3)
+			coroutine.wrap(
+				function()
+					while wait() do
+						CurrentValueFrame.BackgroundColor3 = PresetColor
+					end
+				end
+			)()
 
 			SlideCircle.Name = "SlideCircle"
 			SlideCircle.Parent = SlideFrame
@@ -1133,8 +1121,14 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			SlideCircle.Position = UDim2.new((start or 0)/max, -6,-1.30499995, 0)
 			SlideCircle.Size = UDim2.new(0, 11, 0, 11)
 			SlideCircle.Image = "rbxassetid://3570695787"
-			SlideCircle.ImageColor3 = PresetColor
-
+			coroutine.wrap(
+				function()
+					while wait() do
+						SlideCircle.ImageColor3 = PresetColor
+					end
+				end
+			)()
+			
 			ArrowBtn.Name = "ArrowBtn"
 			ArrowBtn.Parent = Slider
 			ArrowBtn.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
